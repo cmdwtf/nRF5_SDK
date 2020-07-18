@@ -212,7 +212,7 @@ static void nrfx_nfct_field_event_handler(volatile nrfx_nfct_field_state_t field
 #elif defined(NRF52832_XXAA) || defined(NRF52832_XXAB)
                 nrfx_timer_clear(&m_timer_workaround.timer);
                 nrfx_timer_enable(&m_timer_workaround.timer);
-                m_timer_workaround.field_state_cnt = 0;  
+                m_timer_workaround.field_state_cnt = 0;
 #endif // defined(NRF52833_XXAA) || defined(NRF52840_XXAA)
 
                 m_nfct_cb.field_on = true;
@@ -720,6 +720,18 @@ void nrfx_nfct_irq_handler(void)
         nrfx_nfct_field_event_handler(current_field);
     }
 
+	if (NRFX_NFCT_EVT_ACTIVE(RXFRAMESTART))
+	{
+        nrf_nfct_event_clear(NRF_NFCT_EVENT_RXFRAMESTART);
+
+        nrfx_nfct_evt_t nfct_evt =
+        {
+            .evt_id = NRFX_NFCT_EVT_RX_FRAMESTART
+        };
+
+        NRFX_NFCT_CB_HANDLE(m_nfct_cb.config.cb, nfct_evt);
+	}
+
     if (NRFX_NFCT_EVT_ACTIVE(RXFRAMEEND))
     {
         nrf_nfct_event_clear(NRF_NFCT_EVENT_RXFRAMEEND);
@@ -736,7 +748,7 @@ void nrfx_nfct_irq_handler(void)
 
         if (NRFX_NFCT_EVT_ACTIVE(RXERROR))
         {
-            nfct_evt.params.rx_frameend.rx_status = 
+            nfct_evt.params.rx_frameend.rx_status =
                 (nrf_nfct_rx_frame_status_get() & NRFX_NFCT_FRAME_STATUS_RX_ALL_MASK);
             nrf_nfct_event_clear(NRF_NFCT_EVENT_RXERROR);
 
@@ -774,7 +786,7 @@ void nrfx_nfct_irq_handler(void)
     if (NRFX_NFCT_EVT_ACTIVE(SELECTED))
     {
         nrf_nfct_event_clear(NRF_NFCT_EVENT_SELECTED);
-        /* Clear also RX END and RXERROR events because SW does not take care of 
+        /* Clear also RX END and RXERROR events because SW does not take care of
            commands that were received before selecting the tag. */
         nrf_nfct_event_clear(NRF_NFCT_EVENT_RXFRAMEEND);
         nrf_nfct_event_clear(NRF_NFCT_EVENT_RXERROR);
