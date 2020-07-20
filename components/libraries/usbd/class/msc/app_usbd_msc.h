@@ -50,6 +50,22 @@
 #include "app_usbd_core.h"
 #include "app_usbd_descriptor.h"
 
+/*lint -save -e407 */
+
+/**
+ * @brief Events passed to user event handler.
+ *
+ * @note Example prototype of user event handler:
+ *
+ * void msc_user_ev_handler(app_usbd_class_inst_t const * p_inst,
+ *                          app_usbd_msc_user_event_t     event);
+ */
+typedef enum app_usbd_msc_user_event_e {
+    APP_USBD_MSC_USER_EVT_NONE,        /**< Dummy event to satisfy compilers. */
+} app_usbd_msc_user_event_t;
+
+/*lint -restore*/
+
 #include "app_usbd_msc_types.h"
 #include "app_usbd_msc_desc.h"
 #include "app_usbd_msc_scsi.h"
@@ -90,23 +106,6 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_msc,                                            
             APP_USBD_MSC_DATA_SPECIFIC_DEC                                             \
 );
 #endif
-
-/*lint -restore*/
-
-
-/*lint -save -e407 */
-
-/**
- * @brief Events passed to user event handler.
- *
- * @note Example prototype of user event handler:
- *
- * void msc_user_ev_handler(app_usbd_class_inst_t const * p_inst,
- *                          app_usbd_msc_user_event_t     event);
- */
-typedef enum app_usbd_msc_user_event_e {
-    APP_USBD_MSC_USER_EVT_NONE,        /**< Dummy event to satisfy compilers. */
-} app_usbd_msc_user_event_t;
 
 /*lint -restore*/
 
