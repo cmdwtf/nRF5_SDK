@@ -16,7 +16,8 @@ Please refer to [Nordics Licensing Documentation](./documentation/licenses.txt).
 
 # Modifications
 
-Currently, this repository has two modifications to the nrfx_nfct code. All of the changes have been submitted as PRs to the NordicSemiconductor/nrfx repository, but I'm not sure if they'll merge them, nor when a release would follow. I will attempt to document all the changes here as long as they're out of sync.
+Currently, this repository has a few modifications to the nrfx_nfct and usbd code. Some of the changes have been submitted as PRs to the NordicSemiconductor/nrfx repository, but I'm not sure if they'll merge them, nor when a release would follow. I will attempt to document all the changes here as long as they're out of sync.
 
 * [nrfx_nfct: Add callback for RXFRAMESTART](https://github.com/NordicSemiconductor/nrfx/pull/78)
 * [nrfx_ncft: Add function to tx specific bit amount](https://github.com/NordicSemiconductor/nrfx/pull/79)
+* usbd_msc: Moved typedef to make including from C++ code work properly.
