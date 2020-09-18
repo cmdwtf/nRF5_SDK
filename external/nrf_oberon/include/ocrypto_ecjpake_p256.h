@@ -62,8 +62,8 @@ extern "C" {
  * @param[out] V       ZKP ephemeral public key.
  * @param[out] r       ZKP signature.
  * @param      G       Generator. May be NULL to use the default generator.
- * @param      x       Secret key. 0 < x < group order
- * @param      v       ZKP ephemeral secret key. 0 < v < group order
+ * @param      x       Secret key. 0 < x < group order.
+ * @param      v       ZKP ephemeral secret key. 0 < v < group order.
  * @param      id      Identity of originator.
  * @param      id_len  Identity length.
  *

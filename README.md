@@ -1,6 +1,6 @@
-# Nordic nRF5 SDK v17.0.0
+# Nordic nRF5 SDK v17.0.2
 
-This is a mirror of the Nordic nRF5 SDK, version 17.0.0 (9d13099)
+This is a mirror of the Nordic nRF5 SDK, version 17.0.2 (d674dde)
 
 Please refer to Nordic's [official documentation](https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK) for any questions.
 

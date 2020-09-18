@@ -79,7 +79,7 @@ extern "C" {
  * @param      m         The message to be encrypted.
  * @param      mlen      Length of @p m. 0 <= mlen <= 117.
  * @param      seed      The random seed to be used for the padding.
- * @param      slen      Length of @p seed. @p slen >= 125 - @p mlen
+ * @param      slen      Length of @p seed. @p slen >= 125 - @p mlen.
  * @param      pk        A valid 1024-bit RSA public key.
  *
  * @retval -1 If the message is too long (mlen > 117).
@@ -108,7 +108,7 @@ int ocrypto_rsa1024_pkcs1_v15_encrypt(
  *
  * @retval -1 If decryption failed.
  * @retval -2 If the output buffer is too short (mlen < length of message).
- * @retval  n If a message of length n was successfully decrypted. 
+ * @retval  n If a message of length n was successfully decrypted.
  *
  * @remark The key @p k should be initialized with @c ocrypto_rsa1024_init_key.
  * @remark @p m and @p c can point to the same address.
@@ -130,7 +130,7 @@ int ocrypto_rsa1024_pkcs1_v15_decrypt(
  *
  * @retval -1  If decryption failed.
  * @retval -2  If the output buffer is too short (mlen < length of message).
- * @retval  n  If a message of length n was successfully decrypted. 
+ * @retval  n  If a message of length n was successfully decrypted.
  *
  * @remark The key @p k should be initialized with @c ocrypto_rsa1024_init_crt_key.
  * @remark @p m and @p c can point to the same address.
@@ -180,7 +180,7 @@ int ocrypto_rsa1024_oaep_sha256_encrypt(
  *
  * @retval -1 If decryption failed.
  * @retval -2 If the output buffer is too short (mlen < length of message).
- * @retval  n If a message of length n was successfully decrypted. 
+ * @retval  n If a message of length n was successfully decrypted.
  *
  * @remark The key @p k should be initialized with @c ocrypto_rsa1024_init_key.
  * @remark @p m and @p c can point to the same address.
@@ -205,7 +205,7 @@ int ocrypto_rsa1024_oaep_sha256_decrypt(
  *
  * @retval -1  If decryption failed.
  * @retval -2  If the output buffer is too short (mlen < length of message).
- * @retval  n  If a message of length n was successfully decrypted. 
+ * @retval  n  If a message of length n was successfully decrypted.
  *
  * @remark The key @p k should be initialized with @c ocrypto_rsa1024_init_crt_key.
  * @remark @p m and @p c can point to the same address.
@@ -392,7 +392,7 @@ int ocrypto_rsa2048_pkcs1_v15_encrypt(
 
  * @retval -1 If decryption failed.
  * @retval -2 If the output buffer is too short (mlen < length of message).
- * @retval n  If a message of length n was successfully decrypted. 
+ * @retval n  If a message of length n was successfully decrypted.
  *
  * @remark The key @p k should be initialized with @c ocrypto_rsa2048_init_key.
  * @remark @p m and @p c can point to the same address.
@@ -414,7 +414,7 @@ int ocrypto_rsa2048_pkcs1_v15_decrypt(
 
  * @retval -1  If decryption failed.
  * @retval -2  If the output buffer is too short (mlen < length of message).
- * @retval  n  If a message of length n was successfully decrypted. 
+ * @retval  n  If a message of length n was successfully decrypted.
  *
  * @remark The key @p k should be initialized with @c ocrypto_rsa2048_init_crt_key.
  * @remark @p m and @p c can point to the same address.
@@ -464,7 +464,7 @@ int ocrypto_rsa2048_oaep_sha256_encrypt(
  *
  * @retval -1 If decryption failed.
  * @retval -2 If the output buffer is too short (mlen < length of message).
- * @retval  n If a message of length n was successfully decrypted. 
+ * @retval  n If a message of length n was successfully decrypted.
  *
  * @remark The key @p k should be initialized with @c ocrypto_rsa2048_init_key.
  * @remark @p m and @p c can point to the same address.
@@ -489,7 +489,7 @@ int ocrypto_rsa2048_oaep_sha256_decrypt(
  *
  * @retval -1  If decryption failed.
  * @retval -2  If the output buffer is too short (mlen < length of message).
- * @retval  n  If a message of length n was successfully decrypted. 
+ * @retval  n  If a message of length n was successfully decrypted.
  *
  * @remark The key @p k should be initialized with @c ocrypto_rsa2048_init_crt_key.
  * @remark @p m and @p c can point to the same address.

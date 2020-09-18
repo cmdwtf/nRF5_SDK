@@ -26,7 +26,7 @@
     <ProgramSection alignment="4" keep="Yes" load="No" name=".mbr_params_page" address_symbol="__start_mbr_params_page" end_symbol="__stop_mbr_params_page" start = "0x0002E000" size="0x1000" />
     <ProgramSection alignment="4" keep="Yes" load="No" name=".bootloader_settings_page" address_symbol="__start_bootloader_settings_page" end_symbol="__stop_bootloader_settings_page" start = "0x0002F000" size="0x1000" />
   </MemorySegment>
-  <MemorySegment name="RAM" start="$(RAM_PH_START)" size="$(RAM_PH_SIZE)">
+  <MemorySegment name="RAM1" start="$(RAM_PH_START)" size="$(RAM_PH_SIZE)">
     <ProgramSection load="no" name=".reserved_ram" start="$(RAM_PH_START)" size="$(RAM_START)-$(RAM_PH_START)" />
     <ProgramSection alignment="0x100" load="No" name=".vectors_ram" start="$(RAM_START)" address_symbol="__app_ram_start__"/>
     <ProgramSection alignment="4" keep="Yes" load="No" name=".nrf_sections_run" address_symbol="__start_nrf_sections_run" />

@@ -1,3 +1,214 @@
+nRF5 SDK v17.0.2
+------------------------
+Release Date: September, 2020
+ 
+This SDK release is a bug fix release replacing nRF5 SDK v17.0.0.
+This version contains the latest MDK (v8.35.0) with a bug fix that properly handles errata
+on future devices with unknown HW ID.
+If you are using v17.0.0 for development, it is strongly recommended to switch to v17.0.2.
+ 
+Highlights:
+ 
+- Added support for version 7.2.0 of SoftDevices S112, S113, S132, and S140.
+- Added workarounds for anomalies 211 and 223.
+- Added new nrfx v1.8.6 with a new MDK.
+  See 'Compatibility of SES projects'.
+
+The following toolchains/devices have been used for testing and verification:
+ 
+ - ARM: MDK-ARM version 5.25   
+ - GCC: GCC ARM Embedded 9.2019q4.major
+ - IAR: IAR Workbench 7.80.4
+ - SES: SES 4.50
+
+
+****
+Compatibility of SES projects:
+
+Updates and fixes in the MDK used by Segger Embedded Studio break backwards compatibility
+with old SES project files.
+To use old projects in combination with this version of the SDK (MDK),
+make the following updates:
+
+1. In the flash_placement.xml file:
+   MemorySegment name must be changed from "RAM" to "RAM1":
+   <MemorySegment name="RAM1" start="$(RAM_PH_START)" size="$(RAM_PH_SIZE)">
+
+2. In the .emProject file:
+   In "linker_section_placements_segments" you must refer to "RAM1", replacing "RAM":
+   linker_section_placements_segments="FLASH RX 0x0 0x100000;RAM1 RWX 0x20000000 0x40000"
+
+*****
+Note for IAR 8 users:
+(Libraries for IAR 8 require wchar_t to be of size 32 bits while IAR 7 requires 16 bits).
+  
+To run a project using IAR 8, follow these intructions:
+ 1. Open the IAR project in IAR 8. The IAR workbench will automatically generate an IAR 8 compatible project file.
+ 2. If the project contains one of the precompiled libraries listed below, replace it
+    with the IAR 8 compatible alternative (there are no projects targeting nRF51 in this SDK).
+ 3. Save the project.
+ 4. When building the project, you might get the warning: "The header file 'cmsis_iar.h' is obsolete and should not be used. [...]".
+    - The problem is described in DevZone post: https://devzone.nordicsemi.com/f/nordic-q-a/31123/iar-ewarm-8-22-1-complains-about-cmsis_iar-h
+      The solution is to remove all occurrences of #include <cmsis_iar.h>.
+     
+The affected libraries are:
+ - micro-ecc crypto:
+    - IAR7: Includes library located in the folder named “…_iar\…”.
+    - IAR8: Switch to using the library from the folder named “…_armgcc\…”.
+ - nrf_cc310, nrf_cc310_bl, and nrf_oberon:
+    - IAR7: Link to a library where “short_wchar” is part of the folder name.
+    - IAR8: Link to a library without “short_wchar” in the folder name.
+ - Gazell, NFC Tag, and 802.15.4:
+    - IAR7: Includes the library where the file name ends with “_iar”.
+    - IAR8: Switch to using the library with similar file name that ends with “_gcc”.
+*****
+ 
+Supported SoftDevices:
+ - S112 v7.2.x
+ - S113 v7.2.x
+ - S122 v8.x.x
+ - S132 v7.2.x
+ - S140 v7.2.x
+ - S212 v6.1.x
+ - S312 v6.1.x
+ - S332 v6.1.x
+ - S340 v6.1.x
+ 
+Supported boards:
+ 
+- PCA10040
+- PCA10040E (nRF52810 emulation on PCA10040)
+- PCA10056
+- PCA10056E (nRF52811 emulation on PCA10056)
+- PCA10100 (support in selected examples)
+- PCA10100E (nRF52820 emulation on PCA10100)
+- PCA10059 (support in selected examples)
+- D52DK1 from Garmin Canada (only for ANT examples)
+- PCA10112 (nRF52840 with the nRF2140 front-end chip)
+  
+For other devices and boards, see the SDK documentation, section "Using
+the SDK with other boards".
+     
+ 
+*** New features
+*****************
+ 
+** Drivers and libraries **
+ 
+- nrfx has been updated to version 1.8.6.
+  For details, see .\modules\nrfx\changelog.md.
+
+** DTM **
+
+-  Added support for new commands added in Bluetooth Core Specification 5.1 and 5.2.
+-  You can now use a vendor-specific command to control the output power on the nRF21540 PA/LNA chip at runtime.
+ 
+*** Changes
+***********
+ 
+** Drivers and libraries **
+
+- Radio Test Example:
+  Updated the radio_test_init() implementation to enable calling it multiple times.
+  Documented how to use the API from radio_test.h directly.
+
+** USB **
+
+- Added an optional workaround for anomaly 211.
+  If `NRFX_USBD_USE_WORKAROUND_FOR_ANOMALY_211 = 1` is set,
+  the USB stack will handle cases of waking up not preceeded by a resume signal.
+  
+- Added a workaround for anomaly 223 in nrfx_usbd.h.
+  The workaround fixes a possible but unlikely case where USB might be in incorrect state after power-on.
+
+- Implemented a bug fix on USB HID related to usage with MacOS.
+  The USB stack has been fixed to update the HID report buffer when idle mode is set to a non-zero value.
+  This fixes the issues with USB HID Composite Example on macOS devices.
+
+*** Bug fixes
+****************
+
+** nrfx/MDK **
+
+- Added a new nrfx version that includes a new MDK.
+  The MDK contains a fix for an issue where it would not properly handle errata
+  on future devices with unknown HW ID.
+  The bug was introduced in nRF5 SDK v17.0.0.
+
+** Proprietary **
+
+- Enhanced ShockBurst library:
+  - Fixed a bug in ESB PRX related to ACK payload.
+    When there is only one ACK payload, it sends the same payload twice.
+
+** Crypto **
+
+- nrf_crypto:
+  - Added nrf_oberon v3.0.6 with the following bug fixes:
+    - Fixed alignment issues when wrapping SHA-1 and SHA-256 contexts inside other context types.
+    - Added missing symbol for HKDF/HMAC using SHA-1.
+  - Added extra parameter check in nrf_crypto_ecc_byte_order_invert to prevent undefined behavior
+    when invalid input is given.
+
+**  Bluetooth Low Energy **
+
+- Fixed a potential variable overflow in the Queued Writes library.
+
+*** Known Issues
+****************
+ 
+** General **
+ 
+- The workaround for Anomaly 198 for nRF52840 SPIM3 peripheral
+  that has been implemented in nrfx_spim cannot be used with a SoftDevice.
+  Flag NRFX_SPIM3_NRF52840_ANOMALY_198_WORKAROUND_ENABLED must be set to zero.
+  The workaround based on a dedicated RAM block for SPIM3 must be used instead.
+   
+- usbd_msc example has a limitation. With setting "APP_USBD_CONFIG_EVENT_QUEUE_ENABLE = 0", when USB
+  cable is unplugged and re-plugged, the application goes into an endless loop.
+  This is due to an issue in the unsupported block device library.
+   
+** BLE **
+ 
+- GATTC: the ble_gattc_service_t::uuid field is incorrectly populated
+  in the BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP event if the
+  sd_ble_gattc_primary_services_discover() or sd_ble_gattc_read()
+  are called when a Primary Service Discovery by Service UUID is already ongoing.
+  When the application has called sd_ble_gattc_primary_services_discover(),
+  it should wait for the BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP event before calling
+  sd_ble_gattc_primary_services_discover() or sd_ble_gattc_read().
+- The TFTP Background DFU example has known instabilities.
+- BLE Interactive CLI example: the command to set a custom ATT MTU only takes
+  effect on the subsequent connection and the updated MTU parameter is not
+  maintained in further connections with the same peer, even when bonded.
+- ANT Shared Channels example: when testing BLE connection with an Android device,
+  the link is terminated by Android due to unhandled LL requests.
+- Bluetooth ANCS example: when connected from iPhone and pressing DK buttons,
+  the example may assert before the BLE link is authenticated.
+ 
+   
+** Crypto **
+ 
+- The nrf_crypto CLI example may fail when using ecc private key converted
+  from raw function for specific curve types.
+ 
+ 
+** Drivers and libraries **
+ 
+- The SAADC driver does not handle detection limits 'high' and 'low' correctly
+  if SAADC resolution is greater than 10 bits.
+- USBD:
+  - The library may handle Remote Wakeup incorrectly.
+  - Issuing a SET_ADDRESS(0) request does not cause the device to change
+    its state to default.
+  - The device does not STALL when a DATA transaction is received outside of SETUP.
+    It ACKs instead.
+- LEDS_OFF, LEDS_ON, LED_IS_ON, LEDS_INVERT, LEDS_CONFIGURE macros defined in boards.h
+  work only with pins on port 0
+
+---------------------------------------------------------------------------
+
+
 nRF5 SDK v17.0.0
 ------------------------
 Release Date: June, 2020

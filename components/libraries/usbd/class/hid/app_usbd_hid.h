@@ -168,6 +168,15 @@ typedef struct {
     ret_code_t (*ep_transfer_out)(app_usbd_class_inst_t const * p_inst);
 
     /**
+     * @brief Function returns subclass descriptor count.
+     *
+     * @param[in] p_inst        Class instance.
+     *
+     * @return                  Count of descriptors
+     */
+    uint8_t (*subclass_count)(app_usbd_class_inst_t const * p_inst);
+
+    /**
      * @brief Function returns subclass descriptor size.
      *
      * @param[in] p_inst        Class instance.

@@ -70,7 +70,7 @@ static uint32_t m_tx_packet_cnt;                                                
 static uint32_t m_rx_packet_cnt;                                                         /**< Number of received packets with valid CRC. */
 static uint8_t m_current_channel;                                                        /**< Radio current channel (frequency). */
 static const nrfx_timer_t m_timer = NRFX_TIMER_INSTANCE(0);                              /**< Timer used for channel sweeps and tx with duty cycle. */
-static const radio_test_config_t * m_p_test_config;                                      /**< Test configuration descriptor. */
+static const radio_test_config_t * m_p_test_config = NULL;                               /**< Test configuration descriptor. */
 
 /**
  * @brief Function for generating an 8-bit random number with the internal random generator.
@@ -683,18 +683,25 @@ void RADIO_IRQHandler(void)
 
 void radio_test_init(radio_test_config_t * p_config)
 {
-    nrf_rng_task_trigger(NRF_RNG_TASK_START);
+    if (!m_p_test_config)
+    {
+        nrf_rng_task_trigger(NRF_RNG_TASK_START);
 
 #ifdef NVMC_ICACHECNF_CACHEEN_Msk
-    nrf_nvmc_icache_config_set(NRF_NVMC, NRF_NVMC_ICACHE_ENABLE);
+        nrf_nvmc_icache_config_set(NRF_NVMC, NRF_NVMC_ICACHE_ENABLE);
 #endif // NVMC_ICACHECNF_CACHEEN_Msk
 
-    timer_init(p_config);
+        timer_init(p_config);
 
-    NVIC_EnableIRQ(RADIO_IRQn);
-    __enable_irq();
+        NVIC_EnableIRQ(RADIO_IRQn);
+        __enable_irq();
 
-    m_p_test_config = p_config;
+        m_p_test_config = p_config;
+    }
+    else
+    {
+        // Already initialized, do nothing
+    }
 }
 
 /**

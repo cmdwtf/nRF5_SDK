@@ -44,6 +44,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "nrf.h"
 
+/* Check MDK version to make sure we have the required macros */
+NRF_MDK_VERSION_ASSERT_AT_LEAST(8,34,0);
+
 /*lint ++flb "Enter library region */
 
 #include "nrf51_erratas.h"

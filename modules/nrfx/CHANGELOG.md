@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project are documented in this file.
 
+## [1.8.6] - 2020-08-31
+### Added
+- Implemented workaround for anomaly 223 in the USBD driver.
+
+### Changed
+- Updated MDK to version 8.35.0.
+
+## [1.8.5] - 2020-07-09
+### Added
+- Implemented workaround for anomaly 211 in the USBD driver.
+
+### Changed
+- Updated MDK to version 8.32.3.
+
 ## [1.8.4] - 2020-04-27
 - Fixed an issue in the NFCT driver where the FIELDDETECTED event would be ignored and the FIELDLOST event would be processed twice. The driver now properly handles FIELDDETECTED and FIELDLOST events.
 

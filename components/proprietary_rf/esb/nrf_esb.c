@@ -860,15 +860,20 @@ static void on_radio_disabled_rx(void)
                             m_interrupt_flags |= NRF_ESB_INT_TX_SUCCESS_MSK;
                         }
 
-                        p_pipe_info->ack_payload = true;
-
                         if(mp_current_payload != 0)
                         {
+                            p_pipe_info->ack_payload = true;
                             update_rf_payload_format(mp_current_payload->length);
                             m_tx_payload_buffer[0] = mp_current_payload->length;
                             memcpy(&m_tx_payload_buffer[2],
                                    mp_current_payload->data,
                                    mp_current_payload->length);
+                        }
+                        else
+                        {
+                            p_pipe_info->ack_payload = false;
+                            update_rf_payload_format(0);
+                            m_tx_payload_buffer[0] = 0;
                         }
                     }
                     else

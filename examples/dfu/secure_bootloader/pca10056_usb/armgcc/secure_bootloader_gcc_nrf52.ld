@@ -8,9 +8,9 @@ MEMORY
   FLASH (rx) : ORIGIN = 0xf4000, LENGTH = 0xa000
   RAM (rwx) :  ORIGIN = 0x20000008, LENGTH = 0x3fff8
   uicr_bootloader_start_address (r) : ORIGIN = 0x10001014, LENGTH = 0x4
-  mbr_params_page (r) : ORIGIN = 0x000FE000, LENGTH = 0x1000
   bootloader_settings_page (r) : ORIGIN = 0x000FF000, LENGTH = 0x1000
   uicr_mbr_params_page (r) : ORIGIN = 0x10001018, LENGTH = 0x4
+  mbr_params_page (r) : ORIGIN = 0x000FE000, LENGTH = 0x1000
 }
 
 SECTIONS
@@ -22,13 +22,6 @@ SECTIONS
     KEEP(*(SORT(.uicr_bootloader_start_address*)))
     PROVIDE(__stop_uicr_bootloader_start_address = .);
   } > uicr_bootloader_start_address
-  . = ALIGN(4);
-  .mbr_params_page(NOLOAD) :
-  {
-    PROVIDE(__start_mbr_params_page = .);
-    KEEP(*(SORT(.mbr_params_page*)))
-    PROVIDE(__stop_mbr_params_page = .);
-  } > mbr_params_page
   . = ALIGN(4);
   .bootloader_settings_page(NOLOAD) :
   {
@@ -43,6 +36,13 @@ SECTIONS
     KEEP(*(SORT(.uicr_mbr_params_page*)))
     PROVIDE(__stop_uicr_mbr_params_page = .);
   } > uicr_mbr_params_page
+  . = ALIGN(4);
+  .mbr_params_page(NOLOAD) :
+  {
+    PROVIDE(__start_mbr_params_page = .);
+    KEEP(*(SORT(.mbr_params_page*)))
+    PROVIDE(__stop_mbr_params_page = .);
+  } > mbr_params_page
 }
 
 SECTIONS

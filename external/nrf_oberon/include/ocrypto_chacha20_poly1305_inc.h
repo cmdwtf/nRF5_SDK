@@ -140,7 +140,7 @@ void ocrypto_chacha20_poly1305_init(
  * @remark Initialization of the generator state @p ctx through
  *         @c ocrypto_chacha20_poly1305_init is required before this function can be called.
  *
- * @remark @c ocrypto_chacha20_poly1305_update_aad must be called before any call to 
+ * @remark @c ocrypto_chacha20_poly1305_update_aad must be called before any call to
  *         @c ocrypto_chacha20_poly1305_update_enc or @c ocrypto_chacha20_poly1305_update_dec.
  */
 void ocrypto_chacha20_poly1305_update_aad(
@@ -165,7 +165,7 @@ void ocrypto_chacha20_poly1305_update_aad(
  * @remark Initialization of the generator state @p ctx through
  *         @c ocrypto_chacha20_poly1305_init is required before this function can be called.
  *
- * @remark @c ocrypto_chacha20_poly1305_update_enc must be called after any call to 
+ * @remark @c ocrypto_chacha20_poly1305_update_enc must be called after any call to
  *         @c ocrypto_chacha20_poly1305_update_aad.
  *
  * @remark @p c and @p m can point to the same address.
@@ -195,7 +195,7 @@ void ocrypto_chacha20_poly1305_update_enc(
  * @remark Initialization of the generator state @p ctx through
  *         @c ocrypto_chacha20_poly1305_init is required before this function can be called.
  *
- * @remark @c ocrypto_chacha20_poly1305_update_dec must be called after any call to 
+ * @remark @c ocrypto_chacha20_poly1305_update_dec must be called after any call to
  *         @c ocrypto_chacha20_poly1305_update_aad.
  *
  * @remark @p m and @p c can point to the same address.

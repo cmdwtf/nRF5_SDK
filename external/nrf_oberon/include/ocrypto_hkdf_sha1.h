@@ -44,7 +44,7 @@
  * @{
  * @brief Type declaration and APIs for the HKDF-SHA1 algorithm.
  *
- * HKDF-SHA256 is a key derivation function based on HMAC-SHA1.
+ * HKDF-SHA1 is a key derivation function based on HMAC-SHA1.
  *
  * @see [RFC 5869 - HMAC-based Extract-and-Expand Key Derivation Function (HKDF)](http://tools.ietf.org/html/rfc5869)
  */
